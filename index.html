@@ -1,0 +1,49 @@
+<div class="input-group">
+    <input type="text" id="name" placeholder="请输入姓名">
+</div>
+
+<div class="input-group">
+    <select id="gender">
+        <option value="男">男</option>
+        <option value="女">女</option>
+    </select>
+</div>
+
+<button onclick="showResult()">立即预测</button>
+
+<div id="result" style="margin-top:20px;"></div>
+
+<script>
+    function showResult() {
+        // 获取输入值
+        const name = document.getElementById('name').value  || "匿名";
+        const gender = document.getElementById('gender').value;
+
+        // 生成唯一种子
+        const now = new Date();
+        const seed = name.length  * 1000 + now.getHours()  * 100 + now.getMinutes();
+        Math.seedrandom(seed);
+
+        // 生成运势结果
+        const luckLevel = ["大吉", "中吉", "小吉", "平"][Math.floor(Math.random()*4)];
+        const luckyColor = ["红色", "金色", "蓝色", "绿色"][Math.floor(Math.random()*4)];
+
+        // 显示结果
+        document.getElementById('result').innerHTML  = `
+            <h3>${name}的明日运势</h3>
+            <p>幸运指数：${Math.floor(Math.random()*80  + 20)}/100</p>
+            <p>运势评级：${luckLevel}</p>
+            <p>幸运颜色：${luckyColor}</p>
+            <p>温馨提示：${getAdvice(gender)}</p>
+        `;
+    }
+
+    function getAdvice(gender) {
+        const advices = {
+            男: ["保持自信会有惊喜", "注意沟通方式", "适合尝试新事物"],
+            女: ["微笑带来好运", "关注健康作息", "可能收到意外礼物"]
+        };
+        return advices[gender][Math.floor(Math.random()*3)];
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script> 
